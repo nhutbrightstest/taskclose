@@ -13,3 +13,5 @@ steps:
         PGSQL_PASSWORD: $_PGSQL_PASSWORD
         BRANTECT_RUN_TYPE: DEV
       EOF
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/vivid-partition-313706/footer-nginx:master', '--file=services/footer-nginx/Dockerfile', "."]
