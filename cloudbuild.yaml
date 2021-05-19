@@ -9,7 +9,5 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args: ['run', 'deploy', 'taskclose', '--image', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10', '--region', 'us-central1', '--platform', 'managed']
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['run', 'services', 'CustomRole', '--project=taskclose','--platform=managed', '--region=asia-northeast1', 'taskclose', '--member=allUsers', '--role=roles/run.invoker']
 images:
   - gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10
