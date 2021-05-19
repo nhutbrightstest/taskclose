@@ -1,17 +1,5 @@
 steps:
 - name: 'bash'
   args: ["mv", "-f", "services/config/app.yaml", "services/taskclose"]
-- name: "gcr.io/cloud-builders/gcloud"
-  entrypoint: /bin/sh
-  args:
-    - "-c"
-    - |
-      cat << EOF > services/footer/secret.yaml
-      env_variables:
-        PGSQL_DSN: $_PGSQL_DSN
-        PGSQL_USER: $_PGSQL_USER
-        PGSQL_PASSWORD: $_PGSQL_PASSWORD
-        BRANTECT_RUN_TYPE: DEV
-      EOF
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/vivid-partition-313706/footer-nginx:master', '--file=services/footer-nginx/Dockerfile', "."]
