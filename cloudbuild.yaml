@@ -8,6 +8,6 @@ steps:
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
-    args: ['run', 'deploy', 'SERVICE-NAME', '--image', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10', '--region', 'REGION', '--platform', 'managed']
+    args: ['run', 'deploy', 'taskclose', '--image', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10', '--region', 'us-central1', '--platform', 'managed']
 images:
   - gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10
