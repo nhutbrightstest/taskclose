@@ -1,5 +1,13 @@
 steps:
-- name: 'bash'
-  args: ["mv", "-f", "services/config/app.yaml", "services/taskclose"]
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/vivid-partition-313706/footer-nginx:master', '--file=services/footer-nginx/Dockerfile', "."]
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10', '.']
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10']
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: ['run', 'deploy', 'SERVICE-NAME', '--image', 'gcr.io/PROJECT_ID/c0-deeplearning-common-cu110-v20210512-debian-10', '--region', 'REGION', '--platform', 'managed']
+images:
+  - gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10
