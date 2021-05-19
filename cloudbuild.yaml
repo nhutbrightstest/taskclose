@@ -1,13 +1,15 @@
 steps:
-  # Build the container image
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10', '.']
-  # Push the container image to Container Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10']
-  # Deploy container image to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
-    args: ['run', 'deploy', 'SERVICE-NAME', '--image', 'gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10', '--region', 'REGION', '--platform', 'managed']
-images:
-  - gcr.io/vivid-partition-313706/c0-deeplearning-common-cu110-v20210512-debian-10
+- name: 'bash'
+  args: ["mv", "-f", "services/config/app.yaml", "services/taskclose"]
+- name: "gcr.io/cloud-builders/gcloud"
+  entrypoint: /bin/sh
+  args:
+    - "-c"
+    - |
+      cat << EOF > services/footer/secret.yaml
+      env_variables:
+        PGSQL_DSN: $_PGSQL_DSN
+        PGSQL_USER: $_PGSQL_USER
+        PGSQL_PASSWORD: $_PGSQL_PASSWORD
+        BRANTECT_RUN_TYPE: DEV
+      EOF
